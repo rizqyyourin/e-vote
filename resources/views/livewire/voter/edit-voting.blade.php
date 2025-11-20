@@ -205,7 +205,7 @@
                 @endif
             </p>
             <button 
-                onclick="confirmEndVote()"
+                wire:click="$set('showEndModal', true)"
                 class="bg-red-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-red-700 transition"
             >
                 End Vote
@@ -314,93 +314,19 @@
     @endif
 
     <!-- End Vote Confirmation Modal -->
-    <div id="endVoteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+    <div class="fixed inset-0 z-50 flex items-center justify-center" @class(['hidden' => !$showEndModal ?? true])>
+        <div class="fixed inset-0 bg-black bg-opacity-50" wire:click="$set('showEndModal', false)"></div>
+        <div class="relative bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">End Vote</h3>
             <p class="text-gray-600 mb-6">Are you sure you want to end this vote? Voters will no longer be able to participate.</p>
             <div class="flex gap-3 justify-end">
-                <button onclick="closeEndVoteModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition">
+                <button wire:click="$set('showEndModal', false)" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition">
                     Cancel
                 </button>
-                <button onclick="submitEndVote()" class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
+                <button wire:click="finishVoting" class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
                     End Vote
                 </button>
             </div>
         </div>
     </div>
-
-    <style>
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-        }
-
-        .toast {
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .toast.remove {
-            animation: slideOut 0.3s ease-out forwards;
-        }
-    </style>
-
-    <script>
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-            const icon = type === 'success' ? '✓' : '✕';
-            
-            toast.className = `toast fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 z-50`;
-            toast.innerHTML = `<span class="text-xl">${icon}</span><span>${message}</span>`;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('remove');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
-
-        function confirmEndVote() {
-            document.getElementById('endVoteModal').classList.remove('hidden');
-        }
-
-        function closeEndVoteModal() {
-            document.getElementById('endVoteModal').classList.add('hidden');
-        }
-
-        function submitEndVote() {
-            closeEndVoteModal();
-            @this.call('finishVoting');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('endVoteModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEndVoteModal();
-            }
-        });
-
-        // Listen for Livewire flash events
-        Livewire.on('flash', (message) => {
-            showToast(message, 'success');
-        });
-    </script>
 </div>

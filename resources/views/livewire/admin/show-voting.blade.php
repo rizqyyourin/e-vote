@@ -90,7 +90,7 @@
             <p class="text-blue-700 mb-4">Voting dimulai pada {{ $voting->starts_at->format('d M Y H:i') }}</p>
             <button 
                 wire:click="finishVoting"
-                onclick="return confirm('Yakin ingin mengakhiri voting?')"
+                wire:confirm="Yakin ingin mengakhiri voting?"
                 class="bg-red-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-red-700 transition"
             >
                 Akhiri Voting

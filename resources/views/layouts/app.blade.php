@@ -49,6 +49,9 @@
         }
     </script>
     
+    <!-- Alpine.js for lightweight interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <!-- Custom Styles -->
     <style>
         .animation-delay-2000 {
@@ -69,8 +72,8 @@
             <a href="{{ route('home') }}" class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">E-Voting</a>
             
             @auth
-                <div class="flex items-center gap-6 relative">
-                    <button onclick="toggleUserMenu()" class="flex items-center gap-2 hover:opacity-80 transition cursor-pointer">
+                <div class="flex items-center gap-6 relative" x-data="{ open: false }">
+                    <button @click="open = !open" class="flex items-center gap-2 hover:opacity-80 transition cursor-pointer">
                         <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
@@ -78,7 +81,7 @@
                     </button>
 
                     <!-- User Menu Dropdown -->
-                    <div id="userMenu" class="hidden absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-48">
+                    <div @click.away="open = false" x-show="open" class="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-48">
                         <a href="{{ route('voter.settings') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-200 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -133,6 +136,9 @@
         </div>
     @endif
 
+    <!-- Global Toast Notification Component -->
+    <x-toast />
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto py-8 px-4">
         @yield('content')
@@ -146,22 +152,5 @@
     </footer>
 
     @livewireScripts
-
-    <script>
-        function toggleUserMenu() {
-            const menu = document.getElementById('userMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('userMenu');
-            const button = event.target.closest('button');
-            
-            if (!button && !menu.contains(event.target)) {
-                menu.classList.add('hidden');
-            }
-        });
-    </script>
 </body>
 </html>

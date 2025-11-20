@@ -86,17 +86,13 @@
 
 <script>
     // Detect user's timezone automatically
-    function detectTimezone() {
+    document.addEventListener('DOMContentLoaded', () => {
         try {
             const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             document.getElementById('timezone').value = timezone;
         } catch (error) {
-            // Fallback to UTC if detection fails
             document.getElementById('timezone').value = 'UTC';
         }
-    }
-
-    // Run on page load
-    window.addEventListener('DOMContentLoaded', detectTimezone);
+    });
 </script>
 @endsection

@@ -13,6 +13,7 @@ class EditVoting extends Component
     public $ends_at;
     public $top_results;
     public $hasSchedule = false;
+    public $showEndModal = false;
 
     public function mount(Voting $voting)
     {

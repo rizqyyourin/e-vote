@@ -112,7 +112,7 @@
                                 </a>
                             @endif
                             <button 
-                                onclick="confirmDelete({{ $voting->id }}, '{{ addslashes($voting->title) }}')" 
+                                onclick="if (confirm('Are you sure you want to delete &quot;{{ addslashes($voting->title) }}&quot;?\n\nThis action cannot be undone.')) { document.getElementById('delete-form-{{ $voting->id }}').submit(); }"
                                 class="inline-block bg-red-500 text-white px-3 py-2 rounded font-medium hover:bg-red-600 transition text-xs"
                             >
                                 Delete
