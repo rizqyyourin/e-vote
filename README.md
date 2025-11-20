@@ -294,13 +294,15 @@ npm run dev
 
 ## 🔐 Akun Test
 
-Saat melakukan `php artisan db:seed`, sistem akan membuat akun test:
+Saat melakukan `php artisan db:seed`, sistem akan membuat akun test. Anda bisa membuat akun baru langsung di halaman register dengan email apapun.
 
-| Email | Password | Peran | Status |
-|-------|----------|-------|--------|
-| `rizqyyourin6@gmail.com` | `password` | Voter/Admin | Active |
+**Contoh Akun Test:**
+| Email | Password | Peran |
+|-------|----------|-------|
+| `test@example.com` | `password` | Voter/Admin |
+| `admin@example.com` | `password` | Admin |
 
-Anda juga bisa membuat akun baru langsung di halaman register.
+*Catatan: Email yang digunakan saat seed bisa berbeda. Silakan daftar akun baru untuk testing.*
 
 ---
 
