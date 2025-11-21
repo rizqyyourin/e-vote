@@ -58,7 +58,7 @@
         </div>
 
         <!-- Delete Account Confirmation Modal -->
-        <div @class(['fixed inset-0 z-50 flex items-center justify-center' => true, 'hidden' => !$showDeleteModal]) x-show="showDeleteModal">
+        <div class="fixed inset-0 z-50 flex items-center justify-center" :class="{ 'hidden': !showDeleteModal }" x-show="showDeleteModal">
             <!-- Backdrop -->
             <div class="fixed inset-0 bg-black bg-opacity-50" @click="showDeleteModal = false"></div>
 
