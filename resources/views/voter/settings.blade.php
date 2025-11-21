@@ -44,11 +44,17 @@
             <p class="text-red-700 text-sm mb-6">Once you delete your account, there is no going back. Please be certain.</p>
             
             <button 
-                onclick="if (confirm('Are you absolutely sure? This action cannot be undone. All your votings and data will be permanently deleted.')) { const form = document.createElement('form'); form.method = 'POST'; form.action = '{{ route('voter.account.delete') }}'; form.innerHTML = '@csrf @method(\"DELETE\")'; document.body.appendChild(form); form.submit(); }"
+                type="button"
+                onclick="if (confirm('Are you absolutely sure? This action cannot be undone. All your votings and data will be permanently deleted.')) { document.getElementById('delete-account-form').submit(); }"
                 class="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition"
             >
                 Delete Account Permanently
             </button>
+
+            <form id="delete-account-form" action="{{ route('voter.account.delete') }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
         </div>
     </div>
 </div>
