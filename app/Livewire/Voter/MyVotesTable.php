@@ -42,11 +42,12 @@ class MyVotesTable extends Component
     public function confirmDelete()
     {
         if ($this->votingToDelete) {
+            $title = $this->votingToDelete->title;
             $this->votingToDelete->delete();
             $this->showDeleteModal = false;
             $this->votingToDelete = null;
             $this->resetPage();
-            session()->flash('flash', 'Voting deleted successfully!');
+            $this->dispatch('show-toast', message: "\"$title\" deleted successfully!", type: 'success');
         }
     }
 

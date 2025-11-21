@@ -152,5 +152,32 @@
     </footer>
 
     @livewireScripts
+
+    <!-- Toast Event Listener -->
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            Livewire.on('show-toast', (data) => {
+                showToast(data.message, data.type || 'success');
+            });
+        });
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast fixed top-4 right-4 ${type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 z-50`;
+            
+            const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+            toast.innerHTML = `
+                <span class="text-xl">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('animate-pulse');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+    </script>
 </body>
 </html>
