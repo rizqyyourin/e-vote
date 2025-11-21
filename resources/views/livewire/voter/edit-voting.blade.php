@@ -314,7 +314,7 @@
     @endif
 
     <!-- End Vote Confirmation Modal -->
-    <div class="fixed inset-0 z-50 flex items-center justify-center" @class(['hidden' => !$showEndModal ?? true])>
+    <div class="fixed inset-0 z-50 flex items-center justify-center" @class(['hidden' => !$showEndModal])>
         <div class="fixed inset-0 bg-black bg-opacity-50" wire:click="$set('showEndModal', false)"></div>
         <div class="relative bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">End Vote</h3>

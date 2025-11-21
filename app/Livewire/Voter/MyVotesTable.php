@@ -46,6 +46,7 @@ class MyVotesTable extends Component
             $this->showDeleteModal = false;
             $this->votingToDelete = null;
             $this->resetPage();
+            session()->flash('flash', 'Voting deleted successfully!');
         }
     }
 
