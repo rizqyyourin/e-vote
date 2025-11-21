@@ -60,6 +60,7 @@ class EditVoting extends Component
             'ends_at' => now(),
         ]);
 
+        $this->showEndModal = false;
         $this->dispatch('flash', 'Vote finished!');
         $this->dispatch('refresh');
     }
