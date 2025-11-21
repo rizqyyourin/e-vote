@@ -14,6 +14,8 @@ class MyVotesTable extends Component
     public $search = '';
     public $status = '';
     public $sortBy = 'latest';
+    public $showDeleteModal = false;
+    public $votingToDelete = null;
 
     public function resetFilters()
     {
@@ -29,6 +31,28 @@ class MyVotesTable extends Component
     public function gotoPage($page)
     {
         $this->setPage($page);
+    }
+
+    public function showDeleteConfirm($votingId)
+    {
+        $this->votingToDelete = Voting::find($votingId);
+        $this->showDeleteModal = true;
+    }
+
+    public function confirmDelete()
+    {
+        if ($this->votingToDelete) {
+            $this->votingToDelete->delete();
+            $this->showDeleteModal = false;
+            $this->votingToDelete = null;
+            $this->resetPage();
+        }
+    }
+
+    public function closeDeleteModal()
+    {
+        $this->showDeleteModal = false;
+        $this->votingToDelete = null;
     }
 
     public function render()

@@ -112,15 +112,11 @@
                                 </a>
                             @endif
                             <button 
-                                onclick="if (confirm('Are you sure you want to delete &quot;{{ addslashes($voting->title) }}&quot;?\n\nThis action cannot be undone.')) { document.getElementById('delete-form-{{ $voting->id }}').submit(); }"
+                                wire:click="showDeleteConfirm({{ $voting->id }})"
                                 class="inline-block bg-red-500 text-white px-3 py-2 rounded font-medium hover:bg-red-600 transition text-xs"
                             >
                                 Delete
                             </button>
-                            <form id="delete-form-{{ $voting->id }}" action="{{ route('voter.voting.delete', $voting) }}" method="POST" style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
                         </td>
                     </tr>
                 @empty
@@ -195,5 +191,32 @@
                 No votings to display
             </div>
         @endif
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div @class(['fixed inset-0 z-50 flex items-center justify-center' => true, 'hidden' => !$showDeleteModal])>
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black bg-opacity-50" wire:click="closeDeleteModal"></div>
+
+        <!-- Modal -->
+        <div class="relative bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Delete Voting</h3>
+            
+            <p class="text-gray-600 mb-2">
+                Are you sure you want to delete <strong>"{{ $votingToDelete?->title }}"</strong>?
+            </p>
+            <p class="text-sm mb-6 text-red-600">
+                ⚠️ This action cannot be undone. All votes associated with this voting will be permanently deleted.
+            </p>
+            
+            <div class="flex gap-3 justify-end">
+                <button wire:click="closeDeleteModal" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition">
+                    Cancel
+                </button>
+                <button wire:click="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
+                    Delete Voting
+                </button>
+            </div>
+        </div>
     </div>
 </div>
